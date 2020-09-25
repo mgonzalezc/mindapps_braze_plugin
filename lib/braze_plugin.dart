@@ -3,7 +3,7 @@ import 'dart:convert' as json;
 import 'package:flutter/services.dart';
 
 class BrazePlugin {
-  static const MethodChannel _channel = const MethodChannel('braze_plugin');
+  static const MethodChannel _channel = MethodChannel('braze_plugin');
   Function(BrazeInAppMessage) _brazeInAppMessageHandler;
   Function(List<BrazeContentCard>) _brazeContentCardHandler;
 
@@ -155,39 +155,39 @@ class BrazePlugin {
   }
 
   /// Sets a string typed custom attribute
-  void setStringCustomUserAttribute(String key, String value) {
+  Future<void> setStringCustomUserAttribute(String key, String value) async {
     final Map<String, dynamic> params = <String, dynamic>{
       'key': key,
       'value': value
     };
-    _channel.invokeMethod('setStringCustomUserAttribute', params);
+    await _channel.invokeMethod('setStringCustomUserAttribute', params);
   }
 
   /// Sets a double typed custom attribute
-  void setDoubleCustomUserAttribute(String key, double value) {
+  Future<void> setDoubleCustomUserAttribute(String key, double value) {
     final Map<String, dynamic> params = <String, dynamic>{
       'key': key,
       'value': value
     };
-    _channel.invokeMethod('setDoubleCustomUserAttribute', params);
+    return _channel.invokeMethod('setDoubleCustomUserAttribute', params);
   }
 
   /// Sets a boolean typed custom attribute
-  void setBoolCustomUserAttribute(String key, bool value) {
+  Future<void> setBoolCustomUserAttribute(String key, bool value) {
     final Map<String, dynamic> params = <String, dynamic>{
       'key': key,
       'value': value
     };
-    _channel.invokeMethod('setBoolCustomUserAttribute', params);
+    return _channel.invokeMethod('setBoolCustomUserAttribute', params);
   }
 
   /// Sets a integer typed custom attribute
-  void setIntCustomUserAttribute(String key, int value) {
+  Future<void> setIntCustomUserAttribute(String key, int value) {
     final Map<String, dynamic> params = <String, dynamic>{
       'key': key,
       'value': value
     };
-    _channel.invokeMethod('setIntCustomUserAttribute', params);
+    return _channel.invokeMethod('setIntCustomUserAttribute', params);
   }
 
   /// Increments an integer typed custom attribute
@@ -219,8 +219,8 @@ class BrazePlugin {
   }
 
   /// Unsets a custom attribute
-  void unsetCustomUserAttribute(String key) {
-    _callStringMethod('unsetCustomUserAttribute', 'key', key);
+  Future<void> unsetCustomUserAttribute(String key) {
+    return _callStringMethod('unsetCustomUserAttribute', 'key', key);
   }
 
   /// Sets the first name default user attribute
@@ -350,9 +350,9 @@ class BrazePlugin {
     _channel.invokeMethod('setEmailNotificationSubscriptionType', params);
   }
 
-  void _callStringMethod(String methodName, String paramName, String value) {
+  Future<void> _callStringMethod(String methodName, String paramName, String value) {
     final Map<String, dynamic> params = <String, dynamic>{paramName: value};
-    _channel.invokeMethod(methodName, params);
+    return _channel.invokeMethod(methodName, params);
   }
 
   Future<dynamic> _handleBrazeData(MethodCall call) async {
@@ -365,10 +365,10 @@ class BrazePlugin {
         } else {
           print("Braze in-app message callback not present. Doing nothing.");
         }
-        return new Future.value("");
+        return Future.value("");
       case "handleBrazeContentCards":
         final Map<dynamic, dynamic> argumentsMap = call.arguments;
-        List<BrazeContentCard> brazeCards = List<BrazeContentCard>();
+        List<BrazeContentCard> brazeCards = <BrazeContentCard>[];
         for (dynamic card in argumentsMap['contentCards']) {
           brazeCards.add(BrazeContentCard(card));
         }
@@ -377,10 +377,10 @@ class BrazePlugin {
         } else {
           print("Braze content card callback not present. Doing nothing.");
         }
-        return new Future.value("");
+        return Future.value("");
       default:
         print("Unknown method " + call.method + " called. Doing nothing.");
-        return new Future.value("");
+        return Future.value("");
 
     }
   }
@@ -427,7 +427,7 @@ class BrazeContentCard {
   int expiresAt = -1;
 
   /// Key-value pair extras
-  Map<String, String> extras = Map();
+  Map<String, String> extras = {};
 
   /// Content Card id
   String id = "";
@@ -588,10 +588,10 @@ class BrazeInAppMessage {
   MessageType messageType = MessageType.slideup;
 
   /// Buttons to display alongside this in-app message
-  List<BrazeButton> buttons = List<BrazeButton>();
+  List<BrazeButton> buttons = <BrazeButton>[];
 
   /// Key-value pair extras
-  Map<String, String> extras = Map();
+  Map<String, String> extras = {};
 
   /// In-app message json
   String inAppMessageJsonString = "";

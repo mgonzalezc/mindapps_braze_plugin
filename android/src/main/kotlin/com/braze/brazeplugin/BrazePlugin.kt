@@ -88,9 +88,11 @@ class BrazePlugin: MethodCallHandler {
         "changeUser" -> {
           val userId = call.argument<String>("userId")
           Appboy.getInstance(context).changeUser(userId)
+          result.success(null)
         }
         "requestContentCardsRefresh" -> {
           Appboy.getInstance(context).requestContentCardsRefresh(false)
+          result.success(null)
         }
         "launchContentCards" -> {
           if (pluginInstance.registrar.activity() != null) {
@@ -98,6 +100,7 @@ class BrazePlugin: MethodCallHandler {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             this.context.startActivity(intent)
           }
+          result.success(null)
         }
         "logContentCardClicked" -> {
           val contentCardString = call.argument<String>("contentCardString")
@@ -107,6 +110,7 @@ class BrazePlugin: MethodCallHandler {
               contentCard.logClick()
             }
           }
+          result.success(null)
         }
         "logContentCardImpression" -> {
           val contentCardString = call.argument<String>("contentCardString")
@@ -116,6 +120,7 @@ class BrazePlugin: MethodCallHandler {
               contentCard.logImpression()
             }
           }
+          result.success(null)
         }
         "logContentCardDismissed" -> {
           val contentCardString = call.argument<String>("contentCardString")
@@ -125,6 +130,7 @@ class BrazePlugin: MethodCallHandler {
               contentCard.setIsDismissed(true)
             }
           }
+          result.success(null)
         }
         "logInAppMessageClicked" -> {
           val inAppMessage = Appboy.getInstance(context)
@@ -132,6 +138,7 @@ class BrazePlugin: MethodCallHandler {
           if (inAppMessage != null) {
             inAppMessage.logClick()
           }
+          result.success(null)
         }
         "logInAppMessageImpression" -> {
           val inAppMessage = Appboy.getInstance(context)
@@ -139,6 +146,7 @@ class BrazePlugin: MethodCallHandler {
           if (inAppMessage != null) {
             inAppMessage.logImpression()
           }
+          result.success(null)
         }
         "logInAppMessageButtonClicked" -> {
           val inAppMessage = Appboy.getInstance(context)
@@ -153,6 +161,7 @@ class BrazePlugin: MethodCallHandler {
               }
             }
           }
+          result.success(null)
         }
         "getInstallTrackingId" -> {
           result.success(Appboy.getInstance(context).getInstallTrackingId())
@@ -161,12 +170,14 @@ class BrazePlugin: MethodCallHandler {
           val aliasName = call.argument<String>("aliasName")
           val aliasLabel = call.argument<String>("aliasLabel")
           Appboy.getInstance(context).getCurrentUser()?.addAlias(aliasName, aliasLabel)
+          result.success(null)
         }
         "logCustomEvent" -> {
           val eventName = call.argument<String>("eventName")
           val properties = convertToAppboyProperties(
                   call.argument<Map<String, *>>("properties"))
           Appboy.getInstance(context).logCustomEvent(eventName, properties)
+          result.success(null)
         }
         "logPurchase" -> {
           val productId = call.argument<String>("productId")
@@ -177,86 +188,104 @@ class BrazePlugin: MethodCallHandler {
                   call.argument<Map<String, *>>("properties"))
           Appboy.getInstance(context).logPurchase(productId, currencyCode, BigDecimal(price),
                   quantity, properties)
+          result.success(null)
         }
         "addToCustomAttributeArray" -> {
           val key = call.argument<String>("key")
           val value = call.argument<String>("value")
           Appboy.getInstance(context).getCurrentUser()?.addToCustomAttributeArray(key, value)
+          result.success(null)
         }
         "removeFromCustomAttributeArray" -> {
           val key = call.argument<String>("key")
           val value = call.argument<String>("value")
           Appboy.getInstance(context).getCurrentUser()?.removeFromCustomAttributeArray(key, value)
+          result.success(null)
         }
         "setStringCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = call.argument<String>("value")
           Appboy.getInstance(context).getCurrentUser()?.setCustomUserAttribute(key, value)
+          result.success(null)
         }
         "setDoubleCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = call.argument<Double>("value")?: 0.0
           Appboy.getInstance(context).getCurrentUser()?.setCustomUserAttribute(key, value)
+          result.success(null)
         }
         "setDateCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = (call.argument<Int>("value")?: 0).toLong()
           Appboy.getInstance(context).getCurrentUser()?.setCustomUserAttributeToSecondsFromEpoch(
                   key, value)
+          result.success(null)
         }
         "setIntCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = call.argument<Int>("value")?: 0
           Appboy.getInstance(context).getCurrentUser()?.setCustomUserAttribute(key, value)
+          result.success(null)
         }
         "incrementCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = call.argument<Int>("value")?: 0
           Appboy.getInstance(context).getCurrentUser()?.incrementCustomUserAttribute(key, value)
+          result.success(null)
         }
         "setPushNotificationSubscriptionType" -> {
           val type = getSubscriptionType(call.argument<String>("type")?: "")
           Appboy.getInstance(context).getCurrentUser()?.setPushNotificationSubscriptionType(type)
+          result.success(null)
         }
         "setEmailNotificationSubscriptionType" -> {
           val type = getSubscriptionType(call.argument<String>("type")?: "")
           Appboy.getInstance(context).getCurrentUser()?.setEmailNotificationSubscriptionType(type)
+          result.success(null)
         }
         "setBoolCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           val value = call.argument<Boolean>("value")?: false
           Appboy.getInstance(context).getCurrentUser()?.setCustomUserAttribute(key, value)
+          result.success(null)
         }
         "setLocationCustomAttribute" -> {
           val key = call.argument<String>("key")
           val lat = call.argument<Double>("lat")?: 0.0
           val long = call.argument<Double>("long")?: 0.0
           Appboy.getInstance(context).getCurrentUser()?.setLocationCustomAttribute(key, lat, long)
+          result.success(null)
         }
         "requestImmediateDataFlush" -> {
           Appboy.getInstance(context).requestImmediateDataFlush()
+          result.success(null)
         }
         "unsetCustomUserAttribute" -> {
           val key = call.argument<String>("key")
           Appboy.getInstance(context).getCurrentUser()?.unsetCustomUserAttribute(key)
+          result.success(null)
         }
         "setFirstName" -> {
           val firstName = call.argument<String>("firstName")
           Appboy.getInstance(context).getCurrentUser()?.setFirstName(firstName)
+          result.success(null)
         }
         "setLastName" -> {
           val lastName = call.argument<String>("lastName")
           Appboy.getInstance(context).getCurrentUser()?.setLastName(lastName)
+          result.success(null)
         }
         "setDateOfBirth" -> {
           val year = call.argument<Int>("year")?: 0
           val month = getMonth(call.argument<Int>("month")?: 0)
           val day = call.argument<Int>("day")?: 0
           Appboy.getInstance(context).getCurrentUser()?.setDateOfBirth(year, month, day)
+          result.success(null)
         }
         "setEmail" -> {
           val email = call.argument<String>("email")
           Appboy.getInstance(context).getCurrentUser()?.setEmail(email)
+          result.success(null)
         }
         "setGender" -> {
           val gender = call.argument<String>("gender")
@@ -278,22 +307,27 @@ class BrazePlugin: MethodCallHandler {
             return
           }
           Appboy.getInstance(context).getCurrentUser()?.setGender(genderEnum)
+          result.success(null)
         }
         "setLanguage" -> {
           val language = call.argument<String>("language")
           Appboy.getInstance(context).getCurrentUser()?.setLanguage(language)
+          result.success(null)
         }
         "setCountry" -> {
           val country = call.argument<String>("country")
           Appboy.getInstance(context).getCurrentUser()?.setCountry(country)
+          result.success(null)
         }
         "setHomeCity" -> {
           val homeCity = call.argument<String>("homeCity")
           Appboy.getInstance(context).getCurrentUser()?.setHomeCity(homeCity)
+          result.success(null)
         }
         "setPhoneNumber" -> {
           val phoneNumber = call.argument<String>("phoneNumber")
           Appboy.getInstance(context).getCurrentUser()?.setPhoneNumber(phoneNumber)
+          result.success(null)
         }
         "setAttributionData" -> {
           val network = call.argument<String>("network")
@@ -302,23 +336,29 @@ class BrazePlugin: MethodCallHandler {
           val creative = call.argument<String>("creative")
           val attributionData = AttributionData(network, campaign, adGroup, creative)
           Appboy.getInstance(context).getCurrentUser()?.setAttributionData(attributionData)
+          result.success(null)
         }
         "setAvatarImageUrl" -> {
           val avatarImageUrl = call.argument<String>("avatarImageUrl")
           Appboy.getInstance(context).getCurrentUser()?.setAvatarImageUrl(avatarImageUrl)
+          result.success(null)
         }
         "registerAndroidPushToken" -> {
           val pushToken = call.argument<String>("pushToken")
           Appboy.getInstance(context).registerAppboyPushMessages(pushToken)
+          result.success(null)
         }
         "wipeData" -> {
           Appboy.wipeData(context)
+          result.success(null)
         }
         "requestLocationInitialization" -> {
           AppboyLocationService.requestInitialization(context);
+          result.success(null)
         }
         "enableSDK" -> {
           Appboy.enableSdk(context)
+          result.success(null)
         }
         "disableSDK" -> {
           Appboy.disableSdk(context)
