@@ -136,7 +136,7 @@ FlutterMethodChannel *_channel;
       [[Appboy sharedInstance].user setCustomAttributeWithKey:key andDoubleValue:value.doubleValue];
     } else if ([method isEqualToString:@"setBoolCustomUserAttribute"]) {
       NSString *key = arguments[@"key"];
-      BOOL value = arguments[@"value"];
+      BOOL value = [arguments[@"value"] boolValue];
       [[Appboy sharedInstance].user setCustomAttributeWithKey:key andBOOLValue:value];
     } else if ([method isEqualToString:@"setDateCustomUserAttribute"]) {
       NSString *key = arguments[@"key"];
