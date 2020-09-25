@@ -15,7 +15,7 @@ Braze plugin for Flutter.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Appboy-iOS-SDK', '~> 3.25.0'
+  s.dependency 'Appboy-iOS-SDK', '~> 3.26.1'
 
   s.ios.deployment_target = '9.0'
 end

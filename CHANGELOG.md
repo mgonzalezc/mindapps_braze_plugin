@@ -1,3 +1,17 @@
+## 0.10.1
+
+##### Changed
+- The native iOS bridge uses [Braze iOS SDK 3.26.1](https://github.com/Appboy/appboy-ios-sdk/blob/master/CHANGELOG.md#3261).
+
+## 0.10.0
+
+##### Breaking
+- The native Android bridge uses [Braze Android SDK 8.1.0](https://github.com/Appboy/appboy-android-sdk/blob/master/CHANGELOG.md#810).
+- The native iOS bridge uses [Braze iOS SDK 3.26.0](https://github.com/Appboy/appboy-ios-sdk/blob/master/CHANGELOG.md#3260).
+
+##### Fixed
+- Fixed an issue where `setBoolCustomUserAttribute` always set the attribute to `true` on iOS.
+
 ## 0.9.0
 
 ##### Breaking

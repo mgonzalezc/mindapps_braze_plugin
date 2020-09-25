@@ -20,6 +20,8 @@ a specialized package that allows integrators to use certain Braze APIs from Flu
 
 3) To integrate push, follow the directions in our [public documentation](https://www.braze.com/docs/developer_guide/platform_integration_guides/android/push_notifications/integration/). Note that only registration using our "automatic FCM registration" is currently supported from Flutter apps.
 
+4) Call `registerActivityLifecycleCallbacks(AppboyLifecycleCallbackListener())` in your `Application` subclass's `onCreate()` method to automatically register for session tracking and in-app message display. If you do not have an `Application` subclass, add the call to the `onCreate()` method of your main `Activity`.
+
 #### iOS
 
 1) Call `Appboy.startWithApiKey()` in your `AppDelegate`'s `didFinishLaunchingWithOptions` delegate method as specified in our [public documentation](https://www.braze.com/docs/developer_guide/platform_integration_guides/ios/initial_sdk_setup/initial_sdk_setup/#step-4-updating-your-app-delegate).

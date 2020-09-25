@@ -78,6 +78,7 @@ coverage
 
 #Example
 /example/
+/test/
 
 
 key.properties
