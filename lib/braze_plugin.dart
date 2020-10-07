@@ -51,7 +51,6 @@ class BrazePlugin {
     _channel.invokeMethod('logContentCardDismissed', params);
   }
 
-
   /// Logs a click for the provided in-app message data
   void logInAppMessageClicked(BrazeInAppMessage inAppMessage) {
     final Map<String, dynamic> params = <String, dynamic>{
@@ -69,18 +68,19 @@ class BrazePlugin {
   }
 
   /// Logs a button click for the provided in-app message button data
-  void logInAppMessageButtonClicked(BrazeInAppMessage inAppMessage,
-      int buttonId) {
+  void logInAppMessageButtonClicked(
+      BrazeInAppMessage inAppMessage, int buttonId) {
     final Map<String, dynamic> params = <String, dynamic>{
       "inAppMessageString": inAppMessage.inAppMessageJsonString,
       "buttonId": buttonId
     };
     _channel.invokeMethod('logInAppMessageButtonClicked', params);
   }
-  
+
   /// Gets the install tracking id
   Future<String> getInstallTrackingId() {
-    return _channel.invokeMethod('getInstallTrackingId')
+    return _channel
+        .invokeMethod('getInstallTrackingId')
         .then<String>((dynamic result) => result);
   }
 
@@ -356,7 +356,7 @@ class BrazePlugin {
   }
 
   Future<dynamic> _handleBrazeData(MethodCall call) async {
-    switch(call.method) {
+    switch (call.method) {
       case "handleBrazeInAppMessage":
         final Map<dynamic, dynamic> argumentsMap = call.arguments;
         String inAppMessageString = argumentsMap['inAppMessage'];
@@ -407,7 +407,6 @@ enum ClickAction { news_feed, uri, none }
 enum MessageType { slideup, modal, full, html_full }
 
 class BrazeContentCard {
-
   /// Content Card json
   String contentCardJsonString = "";
 
@@ -542,17 +541,44 @@ class BrazeContentCard {
 
   @override
   String toString() {
-    return "BrazeContentCard viewed:" + viewed.toString() + " url:" + url
-      + " type:" + type + " useWebView:" + useWebView.toString()  + " title:"
-      + title + " removed:" + removed.toString() + " linkText:" + linkText
-      + " pinned:" + pinned.toString() + " image:" + image
-      + " imageAspectRatio:" + imageAspectRatio.toString() + " id:" + id
-      + " extras:" + extras.toString() + " description:" + description
-      + " created:" + created.toString() + " expiresAt:"
-      + expiresAt.toString() + " clicked:" + clicked.toString()
-      + " expiresAt:" + expiresAt.toString() + " dismissable:"
-      + dismissable.toString() + " contentCardJsonString:"
-      + contentCardJsonString;
+    return "BrazeContentCard viewed:" +
+        viewed.toString() +
+        " url:" +
+        url +
+        " type:" +
+        type +
+        " useWebView:" +
+        useWebView.toString() +
+        " title:" +
+        title +
+        " removed:" +
+        removed.toString() +
+        " linkText:" +
+        linkText +
+        " pinned:" +
+        pinned.toString() +
+        " image:" +
+        image +
+        " imageAspectRatio:" +
+        imageAspectRatio.toString() +
+        " id:" +
+        id +
+        " extras:" +
+        extras.toString() +
+        " description:" +
+        description +
+        " created:" +
+        created.toString() +
+        " expiresAt:" +
+        expiresAt.toString() +
+        " clicked:" +
+        clicked.toString() +
+        " expiresAt:" +
+        expiresAt.toString() +
+        " dismissable:" +
+        dismissable.toString() +
+        " contentCardJsonString:" +
+        contentCardJsonString;
   }
 }
 
@@ -631,8 +657,10 @@ class BrazeInAppMessage {
     var clickActionJson = inAppMessageJson["click_action"];
     if (clickActionJson is String) {
       for (ClickAction action in ClickAction.values) {
-        if (action.toString().toLowerCase().endsWith(clickActionJson
-            .toLowerCase())) {
+        if (action
+            .toString()
+            .toLowerCase()
+            .endsWith(clickActionJson.toLowerCase())) {
           clickAction = action;
         }
       }
@@ -640,8 +668,10 @@ class BrazeInAppMessage {
     var dismissTypeJson = inAppMessageJson["message_close"];
     if (dismissTypeJson is String) {
       for (DismissType type in DismissType.values) {
-        if (type.toString().toLowerCase().endsWith(dismissTypeJson
-            .toLowerCase())) {
+        if (type
+            .toString()
+            .toLowerCase()
+            .endsWith(dismissTypeJson.toLowerCase())) {
           dismissType = type;
         }
       }
@@ -649,8 +679,10 @@ class BrazeInAppMessage {
     var messageTypeJson = inAppMessageJson["type"];
     if (messageTypeJson is String) {
       for (MessageType type in MessageType.values) {
-        if (type.toString().toLowerCase().endsWith(messageTypeJson
-            .toLowerCase())) {
+        if (type
+            .toString()
+            .toLowerCase()
+            .endsWith(messageTypeJson.toLowerCase())) {
           messageType = type;
         }
       }
@@ -709,8 +741,10 @@ class BrazeButton {
     var clickActionJson = buttonJson["click_action"];
     if (clickActionJson is String) {
       for (ClickAction action in ClickAction.values) {
-        if (action.toString().toLowerCase().endsWith(clickActionJson
-            .toLowerCase())) {
+        if (action
+            .toString()
+            .toLowerCase()
+            .endsWith(clickActionJson.toLowerCase())) {
           clickAction = action;
         }
       }
@@ -723,7 +757,13 @@ class BrazeButton {
 
   @override
   String toString() {
-    return "BrazeButton text:" + text + " uri:" + uri + " clickAction:"
-        + clickAction.toString() + " useWebView:" + useWebView.toString();
+    return "BrazeButton text:" +
+        text +
+        " uri:" +
+        uri +
+        " clickAction:" +
+        clickAction.toString() +
+        " useWebView:" +
+        useWebView.toString();
   }
 }
